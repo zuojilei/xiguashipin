@@ -18,5 +18,5 @@ class XiguaspiderItem(scrapy.Item):
     video_play_count = scrapy.Field()
     url = scrapy.Field()
     digg = scrapy.Field()
-    bury =scrapy.Field()
+    bury = scrapy.Field()
     time_info = scrapy.Field()

@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 import re
 
+
 class SeleniumXigua(object):
     """驱动浏览器访问**详情页"""
     # driver = webdriver.PhantomJS()
@@ -21,18 +22,21 @@ class SeleniumXigua(object):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options)
-    def process_request(self,request,spider):
+
+    def process_request(self, request, spider):
         # pattern = re.compile(r'http.*?feed/?(.*?)&category.*?',re.S)
         # data = pattern.findall(request.url)
         # if data:
         self.driver.get(request.url)
         # self.driver.implicitly_wait(30)
         time.sleep(3)
-        response = HtmlResponse(url=self.driver.current_url, request=request, body=self.driver.page_source, encoding='utf-8')
+        response = HtmlResponse(url=self.driver.current_url, request=request, body=self.driver.page_source,
+                                encoding='utf-8')
         return response
 
     def __del__(self):
         self.driver.close()
+
 
 class XiguaspiderSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,

@@ -1,6 +1,7 @@
 # 公共禁止提交文件
-*.xml
+*.iml
 *.out
+*.xml
 *.xlsx
 .idea/
 *.txt

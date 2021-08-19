@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce0ddbae-10da-463b-8e43-73df7c8c4caf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xiguaSpider/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/xiguaSpider/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xiguaSpider/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/xiguaSpider/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xiguaSpider/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/xiguaSpider/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xiguaSpider/spiders/xigua.py" beforeDir="false" afterPath="$PROJECT_DIR$/xiguaSpider/spiders/xigua.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xiguaSpider/util/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/.bzrignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/.bzrignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/items.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/middlewares.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/pipelines.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/spiders/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/spiders/xigua.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xiguaSpider/util/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/xiguaSpider/util/param.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/xiguaSpider/util/tool.py" beforeDir="false" />
     </list>
@@ -98,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1629336886018</updated>
-      <workItem from="1629336888992" duration="10128000" />
+      <workItem from="1629336888992" duration="10761000" />
     </task>
     <servers />
   </component>

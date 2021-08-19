@@ -5,6 +5,7 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+from .settings import PATH
 from scrapy import signals
 from scrapy.http import HtmlResponse
 from selenium import webdriver
@@ -16,26 +17,28 @@ import re
 
 class SeleniumXigua(object):
     """驱动浏览器访问**详情页"""
-    # driver = webdriver.PhantomJS()
     options = Options()
-    options.add_argument('--headless')
+    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+    options.add_argument("service_args = ['–ignore - ssl - errors = true', '–ssl - protocol = TLSv1']")
     options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')
+    options.add_argument('disable-infobars')
     options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=options)
+    options.add_argument('--headless')
 
     def process_request(self, request, spider):
-        # pattern = re.compile(r'http.*?feed/?(.*?)&category.*?',re.S)
-        # data = pattern.findall(request.url)
-        # if data:
-        self.driver.get(request.url)
-        # self.driver.implicitly_wait(30)
-        time.sleep(3)
-        response = HtmlResponse(url=self.driver.current_url, request=request, body=self.driver.page_source,
-                                encoding='utf-8')
+        driver = webdriver.Chrome(
+            # options=self.options,
+            executable_path=PATH)
+        driver.maximize_window()
+        driver.set_page_load_timeout(60)
+        driver.set_script_timeout(60)
+        driver.get(request.url)
+        time.sleep(5)
+        response = HtmlResponse(url=driver.current_url, request=request,
+                                body=driver.page_source, encoding='utf-8')
+        driver.close()
         return response
-
-    def __del__(self):
-        self.driver.close()
 
 
 class XiguaspiderSpiderMiddleware(object):

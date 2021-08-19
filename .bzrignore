@@ -1,0 +1,8 @@
+# 公共禁止提交文件
+*.xml
+*.out
+*.xlsx
+.idea/
+*.txt
+__pycache__/
+/log

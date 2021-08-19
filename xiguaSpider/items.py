@@ -9,14 +9,13 @@ import scrapy
 
 
 class XiguaspiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     title = scrapy.Field()
-    source = scrapy.Field()
-    video_duration_str = scrapy.Field()
-    comments_count = scrapy.Field()
-    video_play_count = scrapy.Field()
+    dianzan = scrapy.Field()
+    shoucang = scrapy.Field()
+    fenxiang = scrapy.Field()
+    viewCount = scrapy.Field()
+    publishTime = scrapy.Field()
+    publishAuthor = scrapy.Field()
+    fensiCount = scrapy.Field()
+    videoCount = scrapy.Field()
     url = scrapy.Field()
-    digg = scrapy.Field()
-    bury = scrapy.Field()
-    time_info = scrapy.Field()

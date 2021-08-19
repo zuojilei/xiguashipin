@@ -17,8 +17,8 @@ NEWSPIDER_MODULE = 'xiguaSpider.spiders'
 # chromdriver路径
 PATH = r"D:\soft\Python\chromedriver.exe"
 
-LOG_LEVEL = "INFO"  # 输出级别
-LOG_STDOUT = True  # 是否标准输出
+# LOG_LEVEL = "ERROR"  # 输出级别
+# LOG_STDOUT = True  # 是否标准输出
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

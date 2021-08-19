@@ -13,12 +13,13 @@ class XiguaspiderPipeline(object):
     def __init__(self):
         self.wb = Workbook()
         self.ws = self.wb.active
-        self.ws.append(['标题', '视频长度', '账号名', '链接', '播放量', '评论数', '点赞数', '不喜欢数', '数据手机时间'])
+        self.ws.append(['标题', '简介', '详情地址', '点赞数', '收藏数', '分享数', '观看次数', '发布时间', '发布作者', '粉丝数',
+                        '视频总数', '视频地址', '封面图片'])
 
     def process_item(self, item, spider):
-        line = [item['title'], item['video_duration_str'], item['source'], item['url'],
-                item['video_play_count'], item['comments_count'], item['digg'],
-                item['bury'], item['time_info']]
+        line = [item['title'], item['description'], item['detailUrl'], item['dianzanCount'],
+                item['shoucangCount'], item['fenxiangCount'], item['viewCount'], item['publishTime'],
+                item['publishAuthor'], item['fensiCount']], item['videoCount'], item['videoUrl'], item['images']
         self.ws.append(line)
         self.wb.save('西瓜视频.xlsx')
 

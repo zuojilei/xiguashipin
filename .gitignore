@@ -5,5 +5,5 @@
 *.xlsx
 .idea/
 *.txt
-__pycache__/
+*/__pycache__
 /log

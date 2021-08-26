@@ -4,8 +4,6 @@ import time
 
 import scrapy
 import json
-import xlwt
-import datetime
 
 from ..items import XiguaspiderItem
 
@@ -27,7 +25,7 @@ class XiguaSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             # 'xiguaSpider.pipelines.XiguaspiderPipeline': 20,
         },
-        'DOWNLOAD_DELAY': 3
+        'DOWNLOAD_DELAY': 5
     }
 
     def parse(self, response):
@@ -38,8 +36,11 @@ class XiguaSpider(scrapy.Spider):
         """
         hrefs = response.xpath('//a[@class="HorizontalFeedCard__title color-link-content-primary"]/@href').getall()
         for href in hrefs:
-            detailUrl = "https://www.ixigua.com{}".format(href)
-            yield scrapy.Request(url=detailUrl, callback=self.get_detail, dont_filter=True)
+            try:
+                detailUrl = "https://www.ixigua.com{}".format(href)
+                yield scrapy.Request(url=detailUrl, callback=self.get_detail, dont_filter=True)
+            except Exception as e:
+                print(e)
 
     def get_detail(self, response):
         # with open('list.html', 'w', encoding='utf-8') as f:
@@ -48,6 +49,9 @@ class XiguaSpider(scrapy.Spider):
 
         # 详情页地址
         item['detailUrl'] = response.url
+
+        # 发布人id
+        item['Authorid'] = ""  # 没有获取
 
         # 标题
         try:
@@ -117,13 +121,16 @@ class XiguaSpider(scrapy.Spider):
             item['fensiCount'] = 0
             print("粉丝数获取error!!!")
 
-        # 视频总数
+        # 评论数
         try:
-            videoCount = response.xpath('//a[@class="author_statics"]/span[3]/text()').get()
-            item['videoCount'] = videoCount if videoCount else 0
+            commentCount = response.xpath('//div[@class="commentCount"]').get()
+            commentCountRe = re.search(r'\d+', commentCount, re.DOTALL)
+            item['commentCount'] = int(commentCountRe.group()) if commentCountRe else 0
         except Exception:
-            item['videoCount'] = 0
-            print("视频总数获取error!!!")
+            item['commentCount'] = 0
+            print("评论数获取error!!!")
+
+        item["comments"] = self.get_comment(response)
 
         dataJsonRe = re.search(r'<script data-react-helmet="true" type="application/ld\+json">(.*?)</script>',
                                response.text, re.DOTALL)
@@ -137,6 +144,32 @@ class XiguaSpider(scrapy.Spider):
             # 视频地址
             item['videoUrl'] = data['embedUrl']
 
-            # 封面图片
-            item['images'] = data['thumbnailUrl'][0]
+        print(item)
         yield item
+
+    @staticmethod
+    def get_comment(response):
+        """获取评论"""
+
+        commentList = []
+        elems = response.xpath('//div[@class="commentList"]/div[@class="commentItem"]')
+        if elems:
+            for elem in elems:
+
+                # 评论人
+                comment_name = elem.xpath('.//div[@class="commentItem__userName"]/span[@class="user__name"]/text()').get()
+                commentUser = comment_name.strip() if comment_name else ""
+
+                # 评论时间
+                comment_time = elem.xpath('.//div[@class="commentItem__publishTime"]/text()').get()
+                commentTime = comment_time.strip() if comment_time else ""
+
+                # 评论内容
+                comment_content = elem.xpath('.//div[@class="commentItem__text"]//text()').get()
+                commentDetail = comment_content.strip() if comment_content else ""
+                commentList.append({"commentUser": commentUser,
+                                    "commentTime": commentTime,
+                                    "commentDetail": commentDetail})
+
+        return commentList
+

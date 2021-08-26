@@ -24,21 +24,42 @@ class SeleniumXigua(object):
     # options.add_argument('--disable-gpu')
     # options.add_argument('disable-infobars')
     # options.add_argument('--disable-dev-shm-usage')
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
+    options.add_argument(
+        'user-agent="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"')
 
     def process_request(self, request, spider):
+        print(request.url)
         driver = webdriver.Chrome(
-            # options=self.options,
+            options=self.options,
             executable_path=PATH)
         driver.maximize_window()
         driver.set_page_load_timeout(60)
         driver.set_script_timeout(60)
         driver.get(request.url)
         time.sleep(5)
+        # 判断当前url是否为详情url，是，控制滚轮下滑
+        if re.search(r'\d+', request.url, re.DOTALL):
+            self.drop_down(driver)
         response = HtmlResponse(url=driver.current_url, request=request,
                                 body=driver.page_source, encoding='utf-8')
         driver.close()
         return response
+
+    def drop_down(self, driver):
+        '''
+        页面下拉尽量模拟成人下拉
+        :return:
+        '''
+        for x in range(1, 10, 3):  # 1 3 5 7...19
+            try:
+                time.sleep(5)
+                j = x / 10  # 分数 1/9 3/9 5/9 7/9...
+                # js下拉页面
+                js = 'document.documentElement.scrollTop = document.documentElement.scrollHeight * %f' % j
+                driver.execute_script(js)
+            except:
+                break
 
 
 class XiguaspiderSpiderMiddleware(object):

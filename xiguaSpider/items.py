@@ -22,4 +22,8 @@ class XiguaspiderItem(scrapy.Item):
     videoUrl = scrapy.Field()
     images = scrapy.Field()
     description = scrapy.Field()
+    commentCount = scrapy.Field()
+    comments = scrapy.Field()
+    Authorid = scrapy.Field()
+
 
